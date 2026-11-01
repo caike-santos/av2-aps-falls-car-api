@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
 public class Locacao {
     private final UUID id;
     private final UUID reservaId;

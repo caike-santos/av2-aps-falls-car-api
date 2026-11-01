@@ -11,13 +11,13 @@ public class LocacaoApplicationService {
     private final ILocacaoRepository locacaoRepository;
     private final IPagamentoGateway pagamentoGateway;
 
-    public LocacaoAplicationService(ILocacaoRepository locacaoRepository, IPagamentoGateway pagamentoGateway) {
+    public LocacaoApplicationService(ILocacaoRepository locacaoRepository, IPagamentoGateway pagamentoGateway) {
         this.locacaoRepository = locacaoRepository;
         this.pagamentoGateway = pagamentoGateway;
     }
+
     public LocacaoResponseDTO efetivarLocacao(EfetivarLocacaoRequestDTO dto) {
-        // OBS: Enquanto o Dev 4 (Reserva) e Dev 2 (Frota) estão finalizando seus módulos,
-        // aqui simulamos os dados calculados que viriam da Reserva:
+        // Dados simulados calculados que viriam da Reserva:
         BigDecimal valorEstimadoReserva = new BigDecimal("1750.00");
         UUID automovelIdSimulado = UUID.randomUUID();
         UUID clienteIdSimulado = UUID.randomUUID();

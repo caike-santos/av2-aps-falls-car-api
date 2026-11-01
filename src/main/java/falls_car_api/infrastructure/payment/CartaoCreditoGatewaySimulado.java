@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Component
-public class CartaoCreditoGatewaySimulado {
+public class CartaoCreditoGatewaySimulado implements IPagamentoGateway{
+
     @Override
     public Pagamento processarCartaoCredito(String numeroCartao, String nomeTitular, String validade, String cvv, BigDecimal valor) {
         if (numeroCartao == null || numeroCartao.replaceAll("\\s+", "").length() < 16) {
