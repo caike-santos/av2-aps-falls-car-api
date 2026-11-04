@@ -1,9 +1,6 @@
-package falls_car_api.infrastructure.persistence.locacao;
+package falls_car_api.infrastructure.locacao;
 
-import falls_car_api.domain.locacao.Locacao;
-import falls_car_api.domain.locacao.Pagamento;
-import falls_car_api.domain.locacao.StatusLocacao;
-import falls_car_api.domain.locacao.VoCondicaoLocacao;
+import falls_car_api.domain.locacao.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,6 +67,18 @@ public class LocacaoEntity {
     @Column(name = "observacoes_condicao_veiculo")
     private String observacoesCondicaoVeiculo;
 
+    @Column(name = "cartao_numero_mascarado")
+    private String cartaoNumeroMascarado;
+
+    @Column(name = "cartao_nome_titular")
+    private String cartaoNomeTitular;
+
+    @Column(name = "cartao_validade")
+    private String cartaoValidade;
+
+    @Column(name = "cartao_codigo_autorizacao")
+    private String cartaoCodigoAutorizacao;
+
     // Converte a Entidade de Domínio Pura -> Entidade de Banco (JPA)
     public static LocacaoEntity fromDomain(Locacao domain) {
         LocacaoEntity entity = new LocacaoEntity();
@@ -86,24 +95,39 @@ public class LocacaoEntity {
         entity.setDataDevolucaoReal(domain.getDataDevolucaoReal());
         entity.setValorTotalPago(domain.getValorTotalPago());
         entity.setStatusLocacao(domain.getStatusLocacao());
-
         if (domain.getCondicaoLocacao() != null) {
             entity.setIncluiMotorista(domain.getCondicaoLocacao().incluiMotorista());
             entity.setTermoResponsabilidadeAceito(domain.getCondicaoLocacao().termoResponsabilidadeAceito());
             entity.setObservacoesCondicaoVeiculo(domain.getCondicaoLocacao().observacoesCondicaoVeiculo());
         }
 
+        if (domain.getPagamento() != null && domain.getPagamento().getCartaoCredito() != null) {
+            entity.setCartaoNumeroMascarado(domain.getPagamento().getCartaoCredito().numeroMascarado());
+            entity.setCartaoNomeTitular(domain.getPagamento().getCartaoCredito().nomeTitular());
+            entity.setCartaoValidade(domain.getPagamento().getCartaoCredito().validade());
+            entity.setCartaoCodigoAutorizacao(domain.getPagamento().getCartaoCredito().codigoAutorizacao());
+        }
         return entity;
     }
-
-    // Converte a Entidade de Banco (JPA) -> Entidade de Domínio Pura
-    public Locacao toDomain(Pagamento pagamento) {
+    public Locacao toDomain() {
         VoCondicaoLocacao voCondicao = new VoCondicaoLocacao(
                 this.incluiMotorista,
                 this.termoResponsabilidadeAceito,
                 this.observacoesCondicaoVeiculo
         );
-
+        VoCartaoCredito voCartao = new VoCartaoCredito(
+                this.cartaoNumeroMascarado != null ? this.cartaoNumeroMascarado : "**** **** **** 0000",
+                this.cartaoNomeTitular != null ? this.cartaoNomeTitular : "TITULAR",
+                this.cartaoValidade != null ? this.cartaoValidade : "12/2030",
+                this.cartaoCodigoAutorizacao != null ? this.cartaoCodigoAutorizacao : "AUTH-LOCAL"
+        );
+        Pagamento pagamento = new Pagamento(
+                UUID.randomUUID(),
+                this.valorTotalPago,
+                falls_car_api.domain.shared.MetodoPagamento.CARTAO_CREDITO,
+                StatusPagamento.APROVADO,
+                voCartao
+        );
         Locacao locacao = new Locacao(
                 this.id,
                 this.reservaId,
@@ -117,11 +141,9 @@ public class LocacaoEntity {
                 this.dataInicio,
                 this.valorTotalPago
         );
-
         if (this.statusLocacao == StatusLocacao.FINALIZADA && this.lojaDevolucaoId != null) {
             locacao.finalizar(this.lojaDevolucaoId);
         }
-
         return locacao;
     }
 }

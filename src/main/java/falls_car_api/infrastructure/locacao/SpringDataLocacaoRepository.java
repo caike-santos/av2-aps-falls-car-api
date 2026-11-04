@@ -1,4 +1,4 @@
-package falls_car_api.infrastructure.persistence.locacao;
+package falls_car_api.infrastructure.locacao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package falls_car_api.infrastructure.persistence.locacao;
+package falls_car_api.infrastructure.locacao;
 
 import falls_car_api.domain.locacao.ILocacaoRepository;
 import falls_car_api.domain.locacao.Locacao;
@@ -21,7 +21,6 @@ public class LocacaoRepositoryImpl implements ILocacaoRepository {
 
     @Override
     public Locacao salvar(Locacao locacao) {
-        // Converte domínio -> tabela do banco
         LocacaoEntity entity = LocacaoEntity.fromDomain(locacao);
         jpaRepository.save(entity);
         return locacao;
@@ -29,15 +28,13 @@ public class LocacaoRepositoryImpl implements ILocacaoRepository {
 
     @Override
     public Optional<Locacao> buscarPorId(UUID id) {
-        // Busca do banco e converte tabela -> domínio
         return jpaRepository.findById(id)
-                .map(entity -> entity.toDomain(null)); // Você pode passar o pagamento associado
+                .map(LocacaoEntity::toDomain);
     }
-
     @Override
     public List<Locacao> listarTodos() {
         return jpaRepository.findAll().stream()
-                .map(entity -> entity.toDomain(null))
+                .map(LocacaoEntity::toDomain)
                 .toList();
     }
 

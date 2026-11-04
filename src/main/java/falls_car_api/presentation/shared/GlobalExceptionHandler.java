@@ -14,10 +14,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import java.time.Instant;
 import java.util.stream.Collectors;
 
-/**
- * Envelope padrão de erro da equipe: timestamp, status, erro, mensagem, caminho.
- * ARQUIVO COMPARTILHADO: se outro dev já tiver criado um @RestControllerAdvice, fiquem só com um.
- */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

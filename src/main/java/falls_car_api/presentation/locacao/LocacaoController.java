@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 @RestController
-@RequestMapping("/api/v1/locacoes")
+@RequestMapping("/api/locacoes")
 public class LocacaoController {
     private final LocacaoApplicationService locacaoService;
     public LocacaoController(LocacaoApplicationService locacaoService) {
