@@ -51,7 +51,6 @@ public class LocacaoApplicationService {
                 LocalDateTime.now(),
                 pagamento.getValor()
         );
-        // 4. Salvar no repositório
         Locacao salva = locacaoRepository.salvar(locacao);
         return LocacaoResponseDTO.fromEntity(salva);
     }

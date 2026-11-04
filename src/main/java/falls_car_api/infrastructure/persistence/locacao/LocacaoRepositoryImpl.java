@@ -1,4 +1,4 @@
-package falls_car_api.infrastructure.persistence;
+package falls_car_api.infrastructure.persistence.locacao;
 
 import falls_car_api.domain.locacao.ILocacaoRepository;
 import falls_car_api.domain.locacao.Locacao;

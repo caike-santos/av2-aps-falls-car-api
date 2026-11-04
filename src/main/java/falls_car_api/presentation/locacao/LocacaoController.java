@@ -1,4 +1,4 @@
-package falls_car_api.presentation;
+package falls_car_api.presentation.locacao;
 import falls_car_api.application.locacao.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
