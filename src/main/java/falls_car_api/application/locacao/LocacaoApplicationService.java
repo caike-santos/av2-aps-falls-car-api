@@ -93,6 +93,15 @@ public class LocacaoApplicationService {
         Locacao locacao = locacaoRepository.buscarPorId(id)
                 .orElseThrow(() -> new DomainException("Locação não encontrada com o ID: " + id));
         locacao.finalizar(dto.getLojaDevolucaoId());
+
+        Automovel automovel = automovelRepository.buscarPorId(locacao.getAutomovelId())
+                .orElseThrow(() -> new DomainException("Automóvel vinculado não encontrado."));
+        if (Boolean.TRUE.equals(dto.getTemAvaria())) {
+            automovel.enviarParaManutencao();
+        } else {
+            automovel.liberarVeiculo(dto.getLojaDevolucaoId());
+        }
+        automovelRepository.atualizar(automovel);
         Locacao atualizada = locacaoRepository.atualizar(locacao);
         return LocacaoResponseDTO.fromEntity(atualizada);
     }
