@@ -11,7 +11,7 @@ public class LojaRequestDTO {
     @NotBlank(message = "O nome da loja é obrigatório.")
     private String nome;
     
-    @NotNull(message = "O tipo da loja (AEROPORTO ou CIDADE) é obrigatório.")
+    @NotNull(message = "O perfil da loja (AEROPORTO ou CIDADE) é obrigatório.")
     private TipoLoja tipoLoja;
     
     @NotBlank(message = "A cidade é obrigatória.")

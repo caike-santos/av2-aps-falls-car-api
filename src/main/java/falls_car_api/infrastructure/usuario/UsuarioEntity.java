@@ -1,6 +1,6 @@
 package falls_car_api.infrastructure.usuario;
 
-import falls_car_api.domain.usuario.Role;
+import falls_car_api.domain.usuario.Perfil;
 import falls_car_api.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class UsuarioEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Perfil perfil;
 
     @Column(name = "cliente_id")
     private UUID clienteId;
@@ -42,12 +42,12 @@ public class UsuarioEntity {
         entity.setNome(domain.getNome());
         entity.setEmail(domain.getEmail());
         entity.setSenha(domain.getSenha());
-        entity.setRole(domain.getRole());
+        entity.setPerfil(domain.getPerfil());
         entity.setClienteId(domain.getClienteId());
         return entity;
     }
 
     public Usuario toDomain() {
-        return new Usuario(this.id, this.nome, this.email, this.senha, this.role, this.clienteId);
+        return new Usuario(this.id, this.nome, this.email, this.senha, this.perfil, this.clienteId);
     }
 }

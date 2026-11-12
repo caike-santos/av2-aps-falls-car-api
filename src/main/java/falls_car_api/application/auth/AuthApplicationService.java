@@ -4,7 +4,7 @@ import falls_car_api.domain.cadastro.Cliente;
 import falls_car_api.domain.cadastro.IClienteRepository;
 import falls_car_api.domain.shared.DomainException;
 import falls_car_api.domain.usuario.IUsuarioRepository;
-import falls_car_api.domain.usuario.Role;
+import falls_car_api.domain.usuario.Perfil;
 import falls_car_api.domain.usuario.Usuario;
 import falls_car_api.infrastructure.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,10 +39,10 @@ public class AuthApplicationService {
             throw new DomainException("Já existe um usuário cadastrado com este e-mail.");
         }
 
-        Role role = dto.getRole() != null ? dto.getRole() : Role.CLIENTE;
+        Perfil perfil = dto.getPerfil() != null ? dto.getPerfil() : Perfil.CLIENTE;
         UUID clienteId = dto.getClienteId();
 
-        if (role == Role.CLIENTE && clienteId == null && dto.getCpf() != null) {
+        if (perfil == Perfil.CLIENTE && clienteId == null && dto.getCpf() != null) {
             Cliente novoCliente = new Cliente();
             UUID novoClienteId = UUID.randomUUID();
             novoCliente.setId(novoClienteId);
@@ -62,7 +62,7 @@ public class AuthApplicationService {
                 dto.getNome(),
                 dto.getEmail(),
                 senhaCriptografada,
-                role,
+                perfil,
                 clienteId
         );
         Usuario salvo = usuarioRepository.salvar(novoUsuario);
@@ -75,7 +75,7 @@ public class AuthApplicationService {
                 .clienteId(salvo.getClienteId())
                 .nome(salvo.getNome())
                 .email(salvo.getEmail())
-                .role(salvo.getRole())
+                .perfil(salvo.getPerfil())
                 .build();
     }
 
@@ -95,7 +95,7 @@ public class AuthApplicationService {
                 .clienteId(usuario.getClienteId())
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
-                .role(usuario.getRole())
+                .perfil(usuario.getPerfil())
                 .build();
     }
 }

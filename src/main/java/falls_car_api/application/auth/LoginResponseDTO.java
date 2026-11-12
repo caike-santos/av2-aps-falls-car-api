@@ -1,6 +1,6 @@
 package falls_car_api.application.auth;
 
-import falls_car_api.domain.usuario.Role;
+import falls_car_api.domain.usuario.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +19,5 @@ public class LoginResponseDTO {
     private UUID clienteId;
     private String nome;
     private String email;
-    private Role role;
+    private Perfil perfil;
 }

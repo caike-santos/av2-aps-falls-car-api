@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 @Service
 public class JwtService {
 
-    @Value("${api.security.token.secret:falls-car-secret-key-2026-super-segura}")
+    @Value("${api.security.token.secret}")
     private String secret;
 
     public String gerarToken(Usuario usuario) {
@@ -24,7 +24,7 @@ public class JwtService {
                     .withIssuer("falls-car-api")
                     .withSubject(usuario.getEmail())
                     .withClaim("id", usuario.getId().toString())
-                    .withClaim("role", usuario.getRole().name())
+                    .withClaim("perfil", usuario.getPerfil().name())
                     .withClaim("clienteId", usuario.getClienteId() != null ? usuario.getClienteId().toString() : "")
                     .withExpiresAt(Instant.now().plus(2, ChronoUnit.HOURS))
                     .sign(algorithm);

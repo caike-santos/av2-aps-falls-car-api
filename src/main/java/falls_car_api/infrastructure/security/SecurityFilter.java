@@ -32,7 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                 Optional<Usuario> usuarioOpt = usuarioRepository.buscarPorEmail(email);
                 if (usuarioOpt.isPresent()) {
                     Usuario usuario = usuarioOpt.get();
-                    var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getRole().name()));
+                    var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getPerfil().name()));
                     var authentication = new UsernamePasswordAuthenticationToken(usuario, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }

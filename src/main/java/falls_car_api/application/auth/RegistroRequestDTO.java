@@ -1,6 +1,6 @@
 package falls_car_api.application.auth;
 
-import falls_car_api.domain.usuario.Role;
+import falls_car_api.domain.usuario.Perfil;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -17,7 +17,7 @@ public class RegistroRequestDTO {
     @NotBlank(message = "Senha é obrigatória")
     private String senha;
 
-    private Role role;
+    private Perfil perfil;
 
     private UUID clienteId;
 
